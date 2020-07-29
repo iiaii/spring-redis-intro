@@ -11,8 +11,10 @@ docker redis 는 기본적으로 6379 포트를 통해 밖으로 보내므로 `-
 `docker run -it --link redis:redis --rm redis redis-cli -h redis -p 6379`
  
 
-모든 키 가져오기 : `keys *`
-키에 해당하는 모든 value 가져오기 : `hget [key] *`
+- 모든 키 가져오기 : `keys *`
+- 키에 해당하는 모든 속성 가져오기 : `hgetall [key]`
+- 키에 해당하는 value 속성 가져오기 : `hget [key] [attr]`
+
 
 
  
