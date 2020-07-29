@@ -2,6 +2,7 @@ package me.iiaii.springredisintro.contentprovider;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 @RedisHash("ContentProvider")
 public class ContentProvider {
@@ -9,12 +10,18 @@ public class ContentProvider {
     @Id
     private String id;
 
+    @Indexed
     private String title;
 
     private String image;
 
-    private String hompage;
+    private String homepage;
 
+    public ContentProvider(String title, String image, String homepage) {
+        this.title = title;
+        this.image = image;
+        this.homepage = homepage;
+    }
 
     public String getId() {
         return id;
@@ -40,11 +47,21 @@ public class ContentProvider {
         this.image = image;
     }
 
-    public String getHompage() {
-        return hompage;
+    public String getHomepage() {
+        return homepage;
     }
 
-    public void setHompage(String hompage) {
-        this.hompage = hompage;
+    public void setHomepage(String homepage) {
+        this.homepage = homepage;
+    }
+
+    @Override
+    public String toString() {
+        return "ContentProvider{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", image='" + image + '\'' +
+                ", homepage='" + homepage + '\'' +
+                '}';
     }
 }

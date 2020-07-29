@@ -8,7 +8,9 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DefaultDataPopulator implements ApplicationRunner {
@@ -37,15 +39,31 @@ public class DefaultDataPopulator implements ApplicationRunner {
 //            System.out.println("===========");
 //        });
 
-        ContentProvider contentProvider = new ContentProvider();
-        contentProvider.setTitle("SBS");
-        contentProvider.setImage("image");
-        contentProvider.setHompage("hompage");
+        contentProviderRepository.deleteAll();
 
-        contentProviderRepository.save(contentProvider);
+        List<ContentProvider> inputs = new ArrayList<>();
 
-        contentProviderRepository.find
+        inputs.add(new ContentProvider("sbs", "image", "homepage"));
+        inputs.add(new ContentProvider("sbs", "image", "homepage"));
+        inputs.add(new ContentProvider("kbs", "image1", "homepage1"));
+        inputs.add(new ContentProvider("kbs", "image1", "homepage1"));
+        inputs.add(new ContentProvider("kbs", "image1", "homepage1"));
+        inputs.add(new ContentProvider("mbc", "image2", "homepage2"));
+        inputs.add(new ContentProvider("ebs", "image3", "homepage3"));
 
+
+        for (ContentProvider cp : inputs) {
+            ContentProvider findContentProvider = contentProviderRepository
+                    .findByTitle(cp.getTitle())
+                    .orElseGet(() -> contentProviderRepository.save(cp));
+
+            System.out.println("findContentProvider = " + findContentProvider);
+            System.out.println("--------------------");
+        }
+
+        contentProviderRepository
+                .findAll()
+                .forEach(System.out::println);
 
     }
 }
